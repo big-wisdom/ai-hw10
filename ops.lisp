@@ -75,7 +75,7 @@
       :del-list '(c-on-a))
     ;;; operator 2
     (make-op :action 'b-from-t-onto-c
-      :preconds '(clear-b clear-c b-on-t)
+      :preconds '(clear-b clear-c b-on-t c-on-t)
       :add-list '(b-on-c)
       :del-list '(clear-c b-on-t))
     ;;; operator 3
