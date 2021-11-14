@@ -68,8 +68,22 @@
 
 (defparameter *block-ops*
   (list
-   ;;; your block world operators to avoid the Sussman Anomaly.
-   )
+    ;;; operator 1
+    (make-op :action 'c-from-a-onto-t
+      :preconds '(clear-c c-on-a)
+      :add-list '(c-on-t clear-a)
+      :del-list '(c-on-a))
+    ;;; operator 2
+    (make-op :action 'b-from-t-onto-c
+      :preconds '(clear-b clear-c b-on-t)
+      :add-list '(b-on-c)
+      :del-list '(clear-c b-on-t))
+    ;;; operator 3
+    (make-op :action 'a-from-t-onto-b
+      :preconds '(a-on-t clear-a clear-b b-on-c)
+      :add-list '(a-on-b)
+      :del-list '(clear-b a-on-t))
+  )
   )
 	    
 ;;; ================= Monkey and Bananas ====================
