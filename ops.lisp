@@ -3,6 +3,71 @@
 ;;; different worlds and operators for the GPS planner.
 ;;; bugs to vladimir kulyukin in canvas
 ;;; =========================================
+;;; [4]> (gps *block-world* '(a-on-b b-on-c))
+;;; Goal: A-ON-B
+;;; Consider: A-FROM-T-ONTO-B
+;;;   Goal: A-ON-T
+;;;   Goal: CLEAR-A
+;;;   Consider: C-FROM-A-ONTO-T
+;;;     Goal: CLEAR-C
+;;;     Goal: C-ON-A
+;;;   Action: C-FROM-A-ONTO-T
+;;;   Goal: CLEAR-B
+;;;   Goal: B-ON-C
+;;;   Consider: B-FROM-T-ONTO-C
+;;;     Goal: CLEAR-B
+;;;     Goal: CLEAR-C
+;;;     Goal: B-ON-T
+;;;     Goal: C-ON-T
+;;;   Action: B-FROM-T-ONTO-C
+;;; Action: A-FROM-T-ONTO-B
+;;; Goal: B-ON-C
+;;; ((START) (EXECUTE C-FROM-A-ONTO-T) (EXECUTE B-FROM-T-ONTO-C) (EXECUTE A-FROM-T-ONTO-B))
+;;; =========================================
+;;; [5]> (gps *block-world* '(b-on-c a-on-b))
+;;; Goal: B-ON-C
+;;; Consider: B-FROM-T-ONTO-C
+;;;   Goal: CLEAR-B
+;;;   Goal: CLEAR-C
+;;;   Goal: B-ON-T
+;;;   Goal: C-ON-T
+;;;   Consider: C-FROM-A-ONTO-T
+;;;     Goal: CLEAR-C
+;;;     Goal: C-ON-A
+;;;   Action: C-FROM-A-ONTO-T
+;;; Action: B-FROM-T-ONTO-C
+;;; Goal: A-ON-B
+;;; Consider: A-FROM-T-ONTO-B
+;;;   Goal: A-ON-T
+;;;   Goal: CLEAR-A
+;;;   Goal: CLEAR-B
+;;;   Goal: B-ON-C
+;;; Action: A-FROM-T-ONTO-B
+;;; ((START) (EXECUTE C-FROM-A-ONTO-T) (EXECUTE B-FROM-T-ONTO-C) (EXECUTE A-FROM-T-ONTO-B))
+;;; =========================================
+;;; [4]> (gps *banana-world* '(not-hungry))
+;;; Goal: NOT-HUNGRY
+;;; Consider: EAT-BANANAS
+;;;   Goal: HAS-BANANAS
+;;;   Consider: GRASP-BANANAS
+;;;     Goal: AT-BANANAS
+;;;     Consider: CLIMB-ON-CHAIR
+;;;       Goal: CHAIR-AT-MIDDLE-ROOM
+;;;       Consider: PUSH-CHAIR-FROM-DOOR-TO-MIDDLE-ROOM
+;;;         Goal: CHAIR-AT-DOOR
+;;;         Goal: AT-DOOR
+;;;       Action: PUSH-CHAIR-FROM-DOOR-TO-MIDDLE-ROOM
+;;;       Goal: AT-MIDDLE-ROOM
+;;;       Goal: ON-FLOOR
+;;;     Action: CLIMB-ON-CHAIR
+;;;     Goal: EMPTY-HANDED
+;;;     Consider: DROP-BALL
+;;;       Goal: HAS-BALL
+;;;     Action: DROP-BALL
+;;;   Action: GRASP-BANANAS
+;;; Action: EAT-BANANAS
+;;; ((START) (EXECUTE PUSH-CHAIR-FROM-DOOR-TO-MIDDLE-ROOM) (EXECUTE CLIMB-ON-CHAIR) (EXECUTE DROP-BALL) (EXECUTE GRASP-BANANAS) (EXECUTE EAT-BANANAS))
+;;; =========================================
 
 (in-package :user)
 
